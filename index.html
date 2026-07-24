@@ -168,7 +168,23 @@
     margin-top: 6px;
   }
 
-  .sign-box {
+  .phone-row {
+    display: flex;
+    gap: 8px;
+    margin-top: 6px;
+  }
+  .phone-row select {
+    font-family: Arial, sans-serif;
+    font-size: 15px;
+    padding: 10px 6px;
+    border: 1px solid #999;
+    background: #fff;
+    max-width: 130px;
+  }
+  .phone-row input[type=tel] {
+    flex: 1;
+    margin-top: 0;
+  }
     border: 2px solid #111;
     padding: 20px;
     text-align: center;
@@ -312,7 +328,31 @@
       <input type="email" id="email" placeholder="you@example.com" required>
 
       <label class="q" style="margin-top:16px;">Phone number</label>
-      <input type="tel" id="phone" placeholder="+65 ..." required>
+      <div class="phone-row">
+        <select id="countryCode">
+          <option value="+65" selected>🇸🇬 +65</option>
+          <option value="+1">🇺🇸 +1</option>
+          <option value="+1">🇨🇦 +1</option>
+          <option value="+44">🇬🇧 +44</option>
+          <option value="+91">🇮🇳 +91</option>
+          <option value="+977">🇳🇵 +977</option>
+          <option value="+61">🇦🇺 +61</option>
+          <option value="+81">🇯🇵 +81</option>
+          <option value="+82">🇰🇷 +82</option>
+          <option value="+86">🇨🇳 +86</option>
+          <option value="+60">🇲🇾 +60</option>
+          <option value="+66">🇹🇭 +66</option>
+          <option value="+62">🇮🇩 +62</option>
+          <option value="+63">🇵🇭 +63</option>
+          <option value="+84">🇻🇳 +84</option>
+          <option value="+971">🇦🇪 +971</option>
+          <option value="+49">🇩🇪 +49</option>
+          <option value="+33">🇫🇷 +33</option>
+          <option value="+34">🇪🇸 +34</option>
+          <option value="+39">🇮🇹 +39</option>
+        </select>
+        <input type="tel" id="phone" placeholder="8123 4567" required>
+      </div>
     </fieldset>
 
     <fieldset>
@@ -473,7 +513,7 @@ document.getElementById('tripForm').addEventListener('submit', function(e){
   const data = {
     fullName: val('#fullName'),
     email: val('#email'),
-    phone: val('#phone'),
+    phone: val('#countryCode') + ' ' + val('#phone'),
     q1: radioVal('q1'),
     q2: radioVal('q2'),
     q3: radioVal('q3'),

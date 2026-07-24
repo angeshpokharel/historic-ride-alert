@@ -52,19 +52,15 @@
     border: 2px solid #111;
   }
 
-  .collage-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 8px;
+  .collage {
+    display: block;
     margin: 28px auto;
-    max-width: 520px;
-  }
-  .collage-grid img {
     width: 100%;
-    height: 150px;
+    max-width: 520px;
+    height: 300px;
     object-fit: cover;
-    border-radius: 8px;
-    box-shadow: 0 6px 16px rgba(0,0,0,0.3);
+    border-radius: 10px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.35);
   }
   .collage-caption {
     text-align: center;
@@ -73,6 +69,23 @@
     font-size: 18px;
     color: #7b3fa0;
     margin-top: -4px;
+    margin-bottom: 20px;
+  }
+
+  .seat-illustration {
+    display: block;
+    margin: 24px auto;
+    width: 100%;
+    max-width: 460px;
+    border-radius: 10px;
+    box-shadow: 0 8px 22px rgba(0,0,0,0.3);
+  }
+  .seat-caption {
+    text-align: center;
+    font-family: Arial, sans-serif;
+    font-size: 13px;
+    color: #888;
+    margin-top: -14px;
     margin-bottom: 20px;
   }
 
@@ -246,11 +259,7 @@
     <div class="from-line"><img class="from-avatar" src="https://avatars.githubusercontent.com/u/10257128?v=4" alt="Angesh">FROM ANGESH:</div>
   </div>
 
-  <div class="collage-grid">
-    <img src="https://images.unsplash.com/photo-1559329007-23db90ef9f73?fm=jpg&q=80&w=800&auto=format&fit=crop" alt="Marina Bay Sands, Singapore at sunset">
-    <img src="https://images.unsplash.com/photo-1540086916044-196dc42d62c0?fm=jpg&q=80&w=800&auto=format&fit=crop" alt="Aerial view of Sentosa Island, Singapore">
-    <img src="https://images.unsplash.com/photo-1534038877177-cfe80b526a43?fm=jpg&q=80&w=800&auto=format&fit=crop" alt="Supertree Grove, Gardens by the Bay, Singapore">
-  </div>
+  <img class="collage" src="https://images.unsplash.com/photo-1559329007-23db90ef9f73?fm=jpg&q=80&w=1200&auto=format&fit=crop" alt="Marina Bay Sands, Singapore at sunset">
   <p class="collage-caption">SINGAPORE — THE HISTORIC RIDE</p>
 
   <div class="red-line">
@@ -292,6 +301,47 @@
 
     <fieldset>
       <legend>OFFICIAL DECLARATION</legend>
+
+      <svg class="seat-illustration" viewBox="0 0 460 260" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="cabinBg" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#9fd8ff"/>
+            <stop offset="100%" stop-color="#eaf7ff"/>
+          </linearGradient>
+        </defs>
+        <rect width="460" height="260" rx="14" fill="url(#cabinBg)"/>
+
+        <!-- cabin frame -->
+        <rect x="18" y="18" width="424" height="224" rx="18" fill="none" stroke="#1a1140" stroke-width="6"/>
+        <line x1="230" y1="18" x2="230" y2="242" stroke="#1a1140" stroke-width="5"/>
+
+        <!-- roof cable mount -->
+        <line x1="30" y1="18" x2="430" y2="18" stroke="#1a1140" stroke-width="3"/>
+        <line x1="230" y1="18" x2="230" y2="0" stroke="#1a1140" stroke-width="5"/>
+
+        <!-- empty seat, left -->
+        <g transform="translate(70,150)">
+          <rect x="-38" y="0" width="76" height="20" rx="8" fill="#ff5c8a" stroke="#1a1140" stroke-width="4"/>
+          <rect x="-38" y="-58" width="76" height="60" rx="10" fill="#ff8fab" stroke="#1a1140" stroke-width="4"/>
+        </g>
+        <text x="70" y="215" text-anchor="middle" font-family="Arial, sans-serif" font-weight="bold" font-size="15" fill="#1a1140">EMPTY — RESERVED FOR ASIA</text>
+
+        <!-- occupied seat, right, person not fully visible (cropped by frame edge) -->
+        <g transform="translate(345,150)">
+          <rect x="-38" y="0" width="76" height="20" rx="8" fill="#ff5c8a" stroke="#1a1140" stroke-width="4"/>
+          <rect x="-38" y="-58" width="76" height="60" rx="10" fill="#ff8fab" stroke="#1a1140" stroke-width="4"/>
+        </g>
+        <!-- silhouette, cropped at top/side of frame so face not visible -->
+        <clipPath id="cabinClip">
+          <rect x="240" y="18" width="202" height="224" rx="14"/>
+        </clipPath>
+        <g clip-path="url(#cabinClip)">
+          <ellipse cx="345" cy="-10" rx="34" ry="40" fill="#241a3d"/>
+          <rect x="308" y="20" width="74" height="110" rx="24" fill="#241a3d"/>
+        </g>
+        <text x="345" y="215" text-anchor="middle" font-family="Arial, sans-serif" font-weight="bold" font-size="15" fill="#1a1140">OCCUPIED — IDENTITY UNKNOWN</text>
+      </svg>
+      <p class="seat-caption">The seat next to me. One of these two outcomes happens tonight.</p>
 
       <label class="q">1. Will you be riding next to Angesh in the Sentosa cable car, as history intends?</label>
       <label class="opt"><input type="radio" name="q1" required> YES — I will not let a stranger take my seat</label>

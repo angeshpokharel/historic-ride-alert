@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>URGENT: Missed Messages from Angesh</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: Georgia, 'Times New Roman', serif;
+    background: #fff;
+    color: #111;
+    line-height: 1.5;
+  }
+  .browser-bar {
+    background: #f1f1f1;
+    padding: 10px 16px;
+    font-family: Arial, sans-serif;
+    font-size: 13px;
+    color: #555;
+    border-bottom: 1px solid #ddd;
+  }
+  .wrap { max-width: 640px; margin: 0 auto; padding: 24px 20px 60px; }
+
+  .missed-box {
+    border: 3px solid #111;
+    padding: 20px;
+    margin-bottom: 24px;
+  }
+  .missed-box .hl {
+    background: #ffe600;
+    font-weight: bold;
+    font-size: 26px;
+    display: inline;
+    box-decoration-break: clone;
+    -webkit-box-decoration-break: clone;
+  }
+  .from-line {
+    font-weight: bold;
+    font-size: 22px;
+    margin-top: 14px;
+  }
+
+  .portrait {
+    display: block;
+    margin: 28px auto;
+    width: 220px;
+    height: 220px;
+    border-radius: 6px;
+    background: linear-gradient(135deg, #b31942 0%, #b31942 45%, #0a3161 45%, #0a3161 100%);
+    position: relative;
+    overflow: hidden;
+  }
+  .portrait::before {
+    content: "🏝️";
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 90px;
+  }
+
+  .red-line {
+    color: #c8102e;
+    font-weight: bold;
+    font-size: 22px;
+    margin: 20px 0;
+  }
+
+  .msg-label {
+    background: #ffe600;
+    font-weight: bold;
+    display: inline-block;
+    padding: 2px 4px;
+    margin-top: 30px;
+    font-size: 18px;
+  }
+
+  .plain {
+    font-size: 20px;
+    margin: 16px 0;
+  }
+
+  form {
+    margin-top: 36px;
+    border-top: 3px double #111;
+    padding-top: 24px;
+  }
+
+  fieldset {
+    border: 1px solid #ccc;
+    padding: 16px;
+    margin-bottom: 22px;
+  }
+  legend {
+    font-weight: bold;
+    font-size: 17px;
+    padding: 0 6px;
+  }
+
+  label.q {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 10px;
+    font-size: 17px;
+  }
+
+  .opt {
+    display: block;
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+    margin: 8px 0;
+    padding-left: 4px;
+  }
+  .opt input { margin-right: 10px; transform: scale(1.2); }
+
+  textarea, input[type=text] {
+    width: 100%;
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+    padding: 10px;
+    border: 1px solid #999;
+    margin-top: 6px;
+  }
+
+  .sign-box {
+    border: 2px solid #111;
+    padding: 20px;
+    text-align: center;
+    margin-top: 30px;
+  }
+  .sign-box input {
+    font-family: Georgia, serif;
+    font-style: italic;
+    font-size: 22px;
+    text-align: center;
+    border: none;
+    border-bottom: 2px solid #111;
+    width: 90%;
+    padding: 10px 0;
+  }
+  .sign-box input::placeholder { color: #aaa; }
+
+  .checkline {
+    margin-top: 20px;
+    font-weight: bold;
+    font-size: 18px;
+  }
+
+  button {
+    display: block;
+    width: 100%;
+    margin-top: 30px;
+    background: #111;
+    color: #fff;
+    border: none;
+    padding: 18px;
+    font-size: 20px;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    font-family: Arial, sans-serif;
+  }
+  button:hover { background: #c8102e; }
+
+  .footer-note {
+    text-align: center;
+    font-family: Arial, sans-serif;
+    font-size: 12px;
+    color: #888;
+    margin-top: 40px;
+  }
+
+  #confirmation, #reviewview {
+    display: none;
+    text-align: center;
+    padding: 40px 20px;
+  }
+  #confirmation h2, #reviewview h2 {
+    font-size: 28px;
+  }
+  #confirmation .stamp {
+    display: inline-block;
+    border: 4px solid #c8102e;
+    color: #c8102e;
+    padding: 10px 20px;
+    font-weight: bold;
+    transform: rotate(-6deg);
+    font-size: 22px;
+    margin: 20px 0;
+  }
+
+  .review-box {
+    text-align: left;
+    border: 2px solid #111;
+    padding: 20px;
+    margin: 24px 0;
+    font-family: Arial, sans-serif;
+    font-size: 15px;
+  }
+  .review-box dt { font-weight: bold; margin-top: 12px; }
+  .review-box dt:first-child { margin-top: 0; }
+  .review-box dd { margin: 2px 0 0 0; color: #333; }
+
+  .final-warning {
+    color: #c8102e;
+    font-weight: bold;
+    font-size: 20px;
+    margin: 24px 0;
+    font-family: Georgia, serif;
+  }
+
+  .btn-row { display: flex; gap: 12px; }
+  .btn-row button { margin-top: 0; }
+  .btn-secondary {
+    background: #eee !important;
+    color: #111 !important;
+  }
+  .btn-secondary:hover { background: #ddd !important; }
+</style>
+</head>
+<body>
+
+<div class="browser-bar">🔒 secure.angesh-family.com/historic-trip</div>
+
+<div class="wrap" id="formview">
+
+  <div class="missed-box">
+    <span class="hl">You have (5) missed messages…</span>
+    <div class="from-line">FROM ANGESH:</div>
+  </div>
+
+  <div class="portrait"></div>
+
+  <div class="red-line">
+    Your Singapore ticket is booked. But someone is pushing to CANCEL it —
+    take back 50% of the booking fee as a refund — and slide another
+    person into your seat instead.
+  </div>
+
+  <div class="msg-label">Message #1:</div>
+  <p class="plain">
+    THE HISTORIC RIDE ACT!<br>
+    The flight is handled. The cable car seat is under threat. There is
+    currently one (1) seat reserved for Asia, right next to me — but a
+    certain someone has floated cancelling it for a 50% refund and putting
+    someone else in it. I have said no. So far.
+  </p>
+
+  <div class="msg-label">Message #2:</div>
+  <p class="plain">
+    There have been quiet suggestions — from persons who shall remain
+    unnamed — that half a refund is "basically the same" as you going,
+    and that you "probably wouldn't even notice." I do not believe this.
+    But I need proof of life before midnight, or I cannot hold the line.
+  </p>
+
+  <form id="tripForm">
+    <fieldset>
+      <legend>WHO IS THIS</legend>
+      <label class="q">Name</label>
+      <input type="text" id="fullName" placeholder="Your full name" required>
+
+      <label class="q" style="margin-top:16px;">Email</label>
+      <input type="email" id="email" placeholder="you@example.com" required>
+
+      <label class="q" style="margin-top:16px;">Phone number</label>
+      <input type="tel" id="phone" placeholder="+65 ..." required>
+    </fieldset>
+
+    <fieldset>
+      <legend>OFFICIAL DECLARATION</legend>
+
+      <label class="q">1. Will you be riding next to Angesh in the Sentosa cable car, as history intends?</label>
+      <label class="opt"><input type="radio" name="q1" required> YES — I will not let a stranger take my seat</label>
+      <label class="opt"><input type="radio" name="q1"> YES, but only if there's air conditioning</label>
+      <label class="opt"><input type="radio" name="q1"> NO — let someone else make history</label>
+    </fieldset>
+
+    <fieldset>
+      <legend>MAKE IT MEMORABLE</legend>
+
+      <label class="q">2. What will you do to make this THE most historic trip, and not just a normal one?</label>
+      <label class="opt"><input type="radio" name="q2" required> Bring snacks worthy of the occasion</label>
+      <label class="opt"><input type="radio" name="q2"> Document it for the family group chat in real time</label>
+      <label class="opt"><input type="radio" name="q2"> Wear something suitably dramatic for the cable car</label>
+      <label class="opt"><input type="radio" name="q2"> All of the above — I take this seriously</label>
+
+      <label class="q" style="margin-top:20px;">3. On a scale of "fine" to "legendary," how memorable do you plan to make this trip?</label>
+      <label class="opt"><input type="radio" name="q3" required> Fine</label>
+      <label class="opt"><input type="radio" name="q3"> Pretty good</label>
+      <label class="opt"><input type="radio" name="q3"> Legendary — tell the grandkids</label>
+
+      <label class="q" style="margin-top:20px;">4. Any additional testimony in support of the Historic Trip? (optional)</label>
+      <textarea rows="3" id="testimony" placeholder="State your case here..."></textarea>
+    </fieldset>
+
+    <fieldset>
+      <legend>LOYALTY CHECK</legend>
+      <label class="q">5. Will you always stand with Angesh on this seat matter?</label>
+      <label class="opt"><input type="radio" name="q5" required> YES — I'M IN THAT CABLE CAR</label>
+      <label class="opt"><input type="radio" name="q5"> NO</label>
+    </fieldset>
+
+    <div class="sign-box">
+      <p style="font-weight:bold; font-family:Arial, sans-serif; font-size:15px;">
+        TIME IS RUNNING OUT: Sign your name here to confirm your seat &gt;&gt;&gt;
+      </p>
+      <input type="text" id="sigName" placeholder="[ Sign Name Here ]" required>
+    </div>
+
+    <p class="checkline">Will you always STAND WITH ANGESH?</p>
+    <label class="opt"><input type="checkbox" id="yesbox"> YES — LOCK IN THE SEAT!</label>
+    <label class="opt"><input type="checkbox" id="nobox"> NO</label>
+
+    <button type="submit">REVIEW MY ANSWERS →</button>
+  </form>
+
+  <p class="footer-note">This message was sent to you because you are, and remain, a top family candidate.<br>Reply STOP2END to stop receiving love from your brother (not recommended).</p>
+</div>
+
+<div class="wrap" id="reviewview">
+  <h2>⚠️ FINAL CHECK ⚠️</h2>
+  <p class="final-warning">
+    This is your ONLY chance to review this. Once you confirm, it is final
+    — there will be no second submission and no changes after this point.
+  </p>
+
+  <dl class="review-box" id="reviewList"></dl>
+
+  <p class="final-warning" style="font-size:17px;">
+    Read everything above carefully. If it is all correct, press CONFIRM
+    &amp; SUBMIT below. Once you do, your seat is locked and this cannot
+    be undone.
+  </p>
+
+  <div class="btn-row">
+    <button type="button" class="btn-secondary" id="goBackBtn">← GO BACK &amp; EDIT</button>
+    <button type="button" id="finalSubmitBtn">CONFIRM &amp; SUBMIT ✅</button>
+  </div>
+</div>
+
+<div id="confirmation">
+  <h2>CONFIRMED ✅</h2>
+  <p style="font-size:18px;">Your seat next to Angesh on the Sentosa Island cable car is officially secured.</p>
+  <div class="stamp">HISTORIC RIDE: VERIFIED</div>
+  <p style="font-family:Arial, sans-serif; color:#555; font-size:14px;">See you before midnight, Asia. 🇸🇬</p>
+</div>
+
+<script>
+// TODO: paste your deployed Google Apps Script Web App URL here
+const ENDPOINT_URL = "PASTE_APPS_SCRIPT_URL_HERE";
+
+function val(sel) {
+  const el = document.querySelector(sel);
+  return el ? el.value.trim() : '';
+}
+function radioVal(name) {
+  const el = document.querySelector('input[name="' + name + '"]:checked');
+  return el ? el.parentElement.textContent.trim() : '(not answered)';
+}
+
+document.getElementById('tripForm').addEventListener('submit', function(e){
+  e.preventDefault();
+
+  const data = {
+    fullName: val('#fullName'),
+    email: val('#email'),
+    phone: val('#phone'),
+    q1: radioVal('q1'),
+    q2: radioVal('q2'),
+    q3: radioVal('q3'),
+    q4: val('#testimony'),
+    q5: radioVal('q5'),
+    standWith: document.getElementById('yesbox').checked ? 'YES' : (document.getElementById('nobox').checked ? 'NO' : '(not answered)'),
+    signature: val('#sigName')
+  };
+  window.__pendingSubmission = data;
+
+  const list = document.getElementById('reviewList');
+  list.innerHTML = `
+    <dt>Name</dt><dd>${data.fullName}</dd>
+    <dt>Email</dt><dd>${data.email}</dd>
+    <dt>Phone</dt><dd>${data.phone}</dd>
+    <dt>1. Seat confirmation</dt><dd>${data.q1}</dd>
+    <dt>2. How you'll make it memorable</dt><dd>${data.q2}</dd>
+    <dt>3. Memorability scale</dt><dd>${data.q3}</dd>
+    <dt>4. Testimony</dt><dd>${data.q4 || '(none given)'}</dd>
+    <dt>5. Loyalty check</dt><dd>${data.q5}</dd>
+    <dt>Stand with Angesh</dt><dd>${data.standWith}</dd>
+    <dt>Signature</dt><dd>${data.signature}</dd>
+  `;
+
+  document.getElementById('formview').style.display = 'none';
+  document.getElementById('reviewview').style.display = 'block';
+  window.scrollTo(0, 0);
+});
+
+document.getElementById('goBackBtn').addEventListener('click', function(){
+  document.getElementById('reviewview').style.display = 'none';
+  document.getElementById('formview').style.display = 'block';
+  window.scrollTo(0, 0);
+});
+
+document.getElementById('finalSubmitBtn').addEventListener('click', function(){
+  const data = window.__pendingSubmission;
+  this.disabled = true;
+  this.textContent = 'SUBMITTING...';
+
+  fetch(ENDPOINT_URL, {
+    method: 'POST',
+    mode: 'no-cors',
+    headers: { 'Content-Type': 'text/plain' },
+    body: JSON.stringify(data)
+  }).finally(function(){
+    document.getElementById('reviewview').style.display = 'none';
+    document.getElementById('confirmation').style.display = 'block';
+    window.scrollTo(0, 0);
+  });
+});
+</script>
+
+</body>
+</html>

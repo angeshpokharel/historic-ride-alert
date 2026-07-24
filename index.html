@@ -26,6 +26,103 @@
     color: #555;
     border-bottom: 1px solid #ddd;
   }
+
+  /* ===== Floating countdown timer ===== */
+  #countdownTimer {
+    position: fixed;
+    top: 16px;
+    left: 16px;
+    right: auto;
+    z-index: 999;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: linear-gradient(180deg, #1a0006 0%, #0a0003 100%);
+    border: 2px solid #ff1a3c;
+    border-radius: 12px;
+    padding: 8px 14px;
+    box-shadow: 0 0 4px rgba(255,26,60,0.6), 0 6px 18px rgba(0,0,0,0.4);
+    transition: top 0.45s cubic-bezier(.34,1.2,.4,1),
+                left 0.45s cubic-bezier(.34,1.2,.4,1),
+                right 0.45s cubic-bezier(.34,1.2,.4,1),
+                transform 0.45s cubic-bezier(.34,1.2,.4,1),
+                padding 0.45s ease, gap 0.45s ease;
+  }
+  #countdownTimer.docked {
+    left: auto;
+    right: 12px;
+    top: 12px;
+    transform: translateY(2px) scale(0.86);
+    padding: 6px 10px;
+  }
+  #countdownTimer .cd-icon {
+    font-size: 18px;
+    animation: cdPulse 1s infinite;
+    flex-shrink: 0;
+  }
+  @keyframes cdPulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.35; }
+  }
+  #countdownTimer .cd-text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.1;
+  }
+  #countdownTimer .cd-label {
+    font-family: Arial, sans-serif;
+    font-size: 9px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    color: #ff6b7f;
+    text-transform: uppercase;
+    margin-bottom: 2px;
+  }
+  #countdownTimer .cd-digits {
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bold;
+    font-size: 17px;
+    color: #ff2e4d;
+    text-shadow: 0 0 6px rgba(255,46,77,0.9), 0 0 14px rgba(255,46,77,0.5);
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+  }
+  #countdownTimer .cd-digits .cd-unit {
+    font-size: 10px;
+    color: #ff6b7f;
+    -webkit-text-fill-color: #ff6b7f;
+    text-shadow: none;
+    margin-right: 4px;
+  }
+  #countdownTimer.docked .cd-digits { font-size: 14px; }
+  #countdownTimer.docked .cd-label { font-size: 8px; }
+
+  @media (max-width: 480px) {
+    #countdownTimer { top: 10px; left: 10px; padding: 6px 10px; gap: 7px; }
+    #countdownTimer .cd-digits { font-size: 14px; }
+    #countdownTimer .cd-icon { font-size: 15px; }
+    #countdownTimer.docked { right: 8px; top: 8px; padding: 5px 8px; }
+    #countdownTimer.docked .cd-digits { font-size: 12px; }
+
+    .wrap { padding: 16px 14px 50px; }
+    .missed-box { padding: 14px; }
+    .missed-box .hl { font-size: 20px; }
+    .from-line { font-size: 18px; }
+    .from-avatar { width: 38px; height: 38px; }
+    .red-line { font-size: 18px; }
+    .msg-label { font-size: 15px; }
+    .plain { font-size: 17px; }
+    fieldset { padding: 12px; }
+    legend { font-size: 15px; }
+    label.q { font-size: 15px; }
+    .opt { font-size: 15px; }
+    .sign-box input { font-size: 18px; }
+    button { font-size: 17px; padding: 14px; }
+    .country-row select, .phone-row select, .phone-row input { font-size: 14px; }
+    .collage { height: 200px; }
+    .cablecar-photo { height: 170px; }
+    .seat-illustration { max-width: 100%; }
+  }
   .wrap { max-width: 640px; margin: 0 auto; padding: 24px 20px 60px; }
 
   .missed-box {
@@ -299,6 +396,16 @@
 </style>
 </head>
 <body>
+
+<div id="countdownTimer">
+  <span class="cd-icon">⏱️</span>
+  <div class="cd-text">
+    <span class="cd-label">Seat Expires In</span>
+    <span class="cd-digits">
+      <span id="cd-d">0</span><span class="cd-unit">D</span><span id="cd-h">00</span><span class="cd-unit">H</span><span id="cd-m">00</span><span class="cd-unit">M</span><span id="cd-s">00</span><span class="cd-unit">S</span>
+    </span>
+  </div>
+</div>
 
 <div class="browser-bar">🔒 secure.angesh-family.com/historic-trip</div>
 
@@ -813,6 +920,69 @@ document.getElementById('finalSubmitBtn').addEventListener('click', function(){
     }
   });
 });
+
+// ===== Countdown timer: counts down to July 25, 2026 00:00 (Central Time) =====
+(function(){
+  const deadline = new Date("2026-07-25T00:00:00-05:00").getTime();
+  const dEl = document.getElementById('cd-d');
+  const hEl = document.getElementById('cd-h');
+  const mEl = document.getElementById('cd-m');
+  const sEl = document.getElementById('cd-s');
+
+  function pad(n) { return String(n).padStart(2, '0'); }
+
+  function tick() {
+    const now = Date.now();
+    let diff = deadline - now;
+    if (diff < 0) diff = 0;
+
+    const days = Math.floor(diff / 86400000);
+    const hours = Math.floor((diff % 86400000) / 3600000);
+    const mins = Math.floor((diff % 3600000) / 60000);
+    const secs = Math.floor((diff % 60000) / 1000);
+
+    dEl.textContent = days;
+    hEl.textContent = pad(hours);
+    mEl.textContent = pad(mins);
+    sEl.textContent = pad(secs);
+
+    if (diff === 0) {
+      document.querySelector('#countdownTimer .cd-label').textContent = "Time's Up";
+    }
+  }
+  tick();
+  setInterval(tick, 1000);
+})();
+
+// ===== Timer dock/undock on scroll =====
+(function(){
+  const timer = document.getElementById('countdownTimer');
+  let docked = false;
+
+  function updatePosition() {
+    const scrolled = window.scrollY > 24;
+    if (scrolled && !docked) {
+      timer.classList.add('docked');
+      docked = true;
+    } else if (!scrolled && docked) {
+      timer.classList.remove('docked');
+      docked = false;
+    }
+  }
+
+  let ticking = false;
+  window.addEventListener('scroll', function(){
+    if (!ticking) {
+      window.requestAnimationFrame(function(){
+        updatePosition();
+        ticking = false;
+      });
+      ticking = true;
+    }
+  }, { passive: true });
+
+  updatePosition();
+})();
 </script>
 
 </body>

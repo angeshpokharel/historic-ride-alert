@@ -168,7 +168,20 @@
     margin-top: 6px;
   }
 
-  .phone-row {
+  .country-row {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 8px;
+  }
+  .country-row select {
+    font-family: Arial, sans-serif;
+    font-size: 15px;
+    padding: 10px;
+    border: 1px solid #999;
+    background: #fff;
+    width: 100%;
+  }
     display: flex;
     gap: 8px;
     margin-top: 6px;
@@ -443,6 +456,87 @@
       <label class="opt"><input type="radio" name="q5"> NO</label>
     </fieldset>
 
+    <fieldset>
+      <legend>BONUS QUESTION</legend>
+      <p style="font-family:Arial, sans-serif; font-size:14px; color:#555; margin-top:0;">
+        There will be a random lucky draw — if you succeed this time, you
+        could be called for the next trip as well, or get more priority
+        on future trips.
+      </p>
+      <label class="q">Which other countries do you want to travel to next? Pick your top 3.</label>
+      <div class="country-row">
+        <select id="future1" required>
+          <option value="" selected disabled>Choice 1</option>
+          <option value="🇯🇵 Japan">🇯🇵 Japan</option>
+          <option value="🇰🇷 South Korea">🇰🇷 South Korea</option>
+          <option value="🇹🇭 Thailand">🇹🇭 Thailand</option>
+          <option value="🇮🇩 Indonesia (Bali)">🇮🇩 Indonesia (Bali)</option>
+          <option value="🇻🇳 Vietnam">🇻🇳 Vietnam</option>
+          <option value="🇲🇾 Malaysia">🇲🇾 Malaysia</option>
+          <option value="🇵🇭 Philippines">🇵🇭 Philippines</option>
+          <option value="🇰🇭 Cambodia">🇰🇭 Cambodia</option>
+          <option value="🇱🇰 Sri Lanka">🇱🇰 Sri Lanka</option>
+          <option value="🇲🇻 Maldives">🇲🇻 Maldives</option>
+          <option value="🇳🇵 Nepal">🇳🇵 Nepal</option>
+          <option value="🇮🇳 India">🇮🇳 India</option>
+          <option value="🇦🇪 UAE">🇦🇪 UAE</option>
+          <option value="🇦🇺 Australia">🇦🇺 Australia</option>
+          <option value="🇬🇧 United Kingdom">🇬🇧 United Kingdom</option>
+          <option value="🇫🇷 France">🇫🇷 France</option>
+          <option value="🇮🇹 Italy">🇮🇹 Italy</option>
+          <option value="🇪🇸 Spain">🇪🇸 Spain</option>
+          <option value="🇨🇭 Switzerland">🇨🇭 Switzerland</option>
+          <option value="🇺🇸 United States">🇺🇸 United States</option>
+        </select>
+        <select id="future2" required>
+          <option value="" selected disabled>Choice 2</option>
+          <option value="🇯🇵 Japan">🇯🇵 Japan</option>
+          <option value="🇰🇷 South Korea">🇰🇷 South Korea</option>
+          <option value="🇹🇭 Thailand">🇹🇭 Thailand</option>
+          <option value="🇮🇩 Indonesia (Bali)">🇮🇩 Indonesia (Bali)</option>
+          <option value="🇻🇳 Vietnam">🇻🇳 Vietnam</option>
+          <option value="🇲🇾 Malaysia">🇲🇾 Malaysia</option>
+          <option value="🇵🇭 Philippines">🇵🇭 Philippines</option>
+          <option value="🇰🇭 Cambodia">🇰🇭 Cambodia</option>
+          <option value="🇱🇰 Sri Lanka">🇱🇰 Sri Lanka</option>
+          <option value="🇲🇻 Maldives">🇲🇻 Maldives</option>
+          <option value="🇳🇵 Nepal">🇳🇵 Nepal</option>
+          <option value="🇮🇳 India">🇮🇳 India</option>
+          <option value="🇦🇪 UAE">🇦🇪 UAE</option>
+          <option value="🇦🇺 Australia">🇦🇺 Australia</option>
+          <option value="🇬🇧 United Kingdom">🇬🇧 United Kingdom</option>
+          <option value="🇫🇷 France">🇫🇷 France</option>
+          <option value="🇮🇹 Italy">🇮🇹 Italy</option>
+          <option value="🇪🇸 Spain">🇪🇸 Spain</option>
+          <option value="🇨🇭 Switzerland">🇨🇭 Switzerland</option>
+          <option value="🇺🇸 United States">🇺🇸 United States</option>
+        </select>
+        <select id="future3" required>
+          <option value="" selected disabled>Choice 3</option>
+          <option value="🇯🇵 Japan">🇯🇵 Japan</option>
+          <option value="🇰🇷 South Korea">🇰🇷 South Korea</option>
+          <option value="🇹🇭 Thailand">🇹🇭 Thailand</option>
+          <option value="🇮🇩 Indonesia (Bali)">🇮🇩 Indonesia (Bali)</option>
+          <option value="🇻🇳 Vietnam">🇻🇳 Vietnam</option>
+          <option value="🇲🇾 Malaysia">🇲🇾 Malaysia</option>
+          <option value="🇵🇭 Philippines">🇵🇭 Philippines</option>
+          <option value="🇰🇭 Cambodia">🇰🇭 Cambodia</option>
+          <option value="🇱🇰 Sri Lanka">🇱🇰 Sri Lanka</option>
+          <option value="🇲🇻 Maldives">🇲🇻 Maldives</option>
+          <option value="🇳🇵 Nepal">🇳🇵 Nepal</option>
+          <option value="🇮🇳 India">🇮🇳 India</option>
+          <option value="🇦🇪 UAE">🇦🇪 UAE</option>
+          <option value="🇦🇺 Australia">🇦🇺 Australia</option>
+          <option value="🇬🇧 United Kingdom">🇬🇧 United Kingdom</option>
+          <option value="🇫🇷 France">🇫🇷 France</option>
+          <option value="🇮🇹 Italy">🇮🇹 Italy</option>
+          <option value="🇪🇸 Spain">🇪🇸 Spain</option>
+          <option value="🇨🇭 Switzerland">🇨🇭 Switzerland</option>
+          <option value="🇺🇸 United States">🇺🇸 United States</option>
+        </select>
+      </div>
+    </fieldset>
+
     <p class="final-warning" style="font-size:16px; text-align:center;">
       ⚠️ NOTE: Similar form is sent to someone else who
       wants your seat. Whoever makes the strongest case gets to go. Make
@@ -557,6 +651,9 @@ document.getElementById('tripForm').addEventListener('submit', function(e){
     suspect: val('#suspect'),
     q5: radioVal('q5'),
     standWith: document.getElementById('yesbox').checked ? 'YES' : (document.getElementById('nobox').checked ? 'NO' : '(not answered)'),
+    future1: val('#future1'),
+    future2: val('#future2'),
+    future3: val('#future3'),
     signature: val('#sigName')
   };
   window.__pendingSubmission = data;
@@ -573,6 +670,7 @@ document.getElementById('tripForm').addEventListener('submit', function(e){
     <dt>Suspect</dt><dd>${data.suspect}</dd>
     <dt>5. Loyalty check</dt><dd>${data.q5}</dd>
     <dt>Stand with Angesh</dt><dd>${data.standWith}</dd>
+    <dt>Next trip choices</dt><dd>${data.future1}, ${data.future2}, ${data.future3}</dd>
     <dt>Signature</dt><dd>${data.signature}</dd>
   `;
 

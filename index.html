@@ -353,10 +353,7 @@
     <fieldset>
       <legend>SUSPECT LINEUP</legend>
       <label class="q">Who do you think is behind this — trying to cancel your ticket and take the seat for themselves?</label>
-      <label class="opt"><input type="radio" name="suspect" required> A cousin who "just happened" to ask about the itinerary</label>
-      <label class="opt"><input type="radio" name="suspect"> A sibling with suspiciously good timing</label>
-      <label class="opt"><input type="radio" name="suspect"> Someone who has never once mentioned liking cable cars, until now</label>
-      <label class="opt"><input type="radio" name="suspect"> Unknown — but I have my suspicions</label>
+      <input type="text" id="suspect" placeholder="Name your suspect" required>
     </fieldset>
 
     <fieldset>
@@ -441,7 +438,7 @@ document.getElementById('tripForm').addEventListener('submit', function(e){
     q2: radioVal('q2'),
     q3: radioVal('q3'),
     q4: val('#testimony'),
-    suspect: radioVal('suspect'),
+    suspect: val('#suspect'),
     q5: radioVal('q5'),
     standWith: document.getElementById('yesbox').checked ? 'YES' : (document.getElementById('nobox').checked ? 'NO' : '(not answered)'),
     signature: val('#sigName')

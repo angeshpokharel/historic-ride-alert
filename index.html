@@ -232,15 +232,15 @@
     margin-top: 40px;
   }
 
-  #confirmation, #reviewview {
+  #confirmation, #reviewview, #duplicateBlock, #underReview {
     display: none;
     text-align: center;
     padding: 40px 20px;
   }
-  #confirmation h2, #reviewview h2 {
+  #confirmation h2, #reviewview h2, #duplicateBlock h2, #underReview h2 {
     font-size: 28px;
   }
-  #confirmation .stamp {
+  #confirmation .stamp, #underReview .stamp {
     display: inline-block;
     border: 4px solid #c8102e;
     color: #c8102e;
@@ -494,8 +494,28 @@
   <p style="font-family:Arial, sans-serif; color:#555; font-size:14px;">See you before midnight, Asia. 🇸🇬</p>
 </div>
 
+<div id="underReview">
+  <h2>⏳ UNDER REVIEW</h2>
+  <p style="font-size:18px; max-width:440px; margin:0 auto;">
+    Your answers weren't quite as strong as they could've been. This isn't
+    a rejection — but it means your submission will now be compared
+    against the other candidate's before the seat is finalized.
+  </p>
+  <div class="stamp" style="border-color:#7b3fa0; color:#7b3fa0;">PENDING COMPARISON</div>
+  <p style="font-family:Arial, sans-serif; color:#555; font-size:14px;">Best of luck, Asia. The seat isn't lost — yet. 🇸🇬</p>
+</div>
+
+<div id="duplicateBlock">
+  <h2>🚫 ALREADY SUBMITTED</h2>
+  <p style="font-size:18px; max-width:440px; margin:0 auto;">
+    A response from this email has already been recorded. Only one
+    submission per person is allowed — this form cannot be filled out
+    again.
+  </p>
+</div>
+
 <script>
-// TODO: paste your deployed Google Apps Script Web App URL here
+// Google Apps Script Web App URL (see setup instructions)
 const ENDPOINT_URL = "PASTE_APPS_SCRIPT_URL_HERE";
 
 function val(sel) {
@@ -505,6 +525,22 @@ function val(sel) {
 function radioVal(name) {
   const el = document.querySelector('input[name="' + name + '"]:checked');
   return el ? el.parentElement.textContent.trim() : '(not answered)';
+}
+
+const BEST = {
+  q1: "YES — I will not let a stranger take my seat",
+  q2: "All of the above — I take this seriously",
+  q3: "Legendary — tell the grandkids",
+  q5: "YES — I'M IN THAT CABLE CAR",
+  standWith: "YES"
+};
+
+function isPerfectScore(data) {
+  return data.q1 === BEST.q1 &&
+         data.q2 === BEST.q2 &&
+         data.q3 === BEST.q3 &&
+         data.q5 === BEST.q5 &&
+         data.standWith === BEST.standWith;
 }
 
 document.getElementById('tripForm').addEventListener('submit', function(e){
@@ -553,18 +589,38 @@ document.getElementById('goBackBtn').addEventListener('click', function(){
 
 document.getElementById('finalSubmitBtn').addEventListener('click', function(){
   const data = window.__pendingSubmission;
-  this.disabled = true;
-  this.textContent = 'SUBMITTING...';
+  const btn = this;
+  btn.disabled = true;
+  btn.textContent = 'SUBMITTING...';
 
   fetch(ENDPOINT_URL, {
     method: 'POST',
-    mode: 'no-cors',
     headers: { 'Content-Type': 'text/plain' },
     body: JSON.stringify(data)
-  }).finally(function(){
+  })
+  .then(function(res){ return res.json(); })
+  .then(function(result){
     document.getElementById('reviewview').style.display = 'none';
-    document.getElementById('confirmation').style.display = 'block';
     window.scrollTo(0, 0);
+
+    if (result.status === 'duplicate') {
+      document.getElementById('duplicateBlock').style.display = 'block';
+    } else if (isPerfectScore(data)) {
+      document.getElementById('confirmation').style.display = 'block';
+    } else {
+      document.getElementById('underReview').style.display = 'block';
+    }
+  })
+  .catch(function(){
+    // If the endpoint can't be reached, still show an outcome screen
+    // rather than leaving the button stuck.
+    document.getElementById('reviewview').style.display = 'none';
+    window.scrollTo(0, 0);
+    if (isPerfectScore(data)) {
+      document.getElementById('confirmation').style.display = 'block';
+    } else {
+      document.getElementById('underReview').style.display = 'block';
+    }
   });
 });
 </script>
